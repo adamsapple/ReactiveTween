@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ReactiveTween", "ReactiveTween\ReactiveTween.shproj", "{39FF07E0-B538-447B-BE9E-F5E7742CAAC3}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ReactiveTween\ReactiveTween.projitems*{39ff07e0-b538-447b-be9e-f5e7742caac3}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14125CCB-FBA4-4614-95D2-675C3CA864BA}
+	EndGlobalSection
+EndGlobal
