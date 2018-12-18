@@ -17,6 +17,6 @@ Observable.Concat(new IObservable<float>[]{
 .Subscribe(x => arc = x);
 ```
 
-## refers
+## refers and thanks
 - https://github.com/fumobox/TweenRx/
 - https://github.com/keith-hall/reactive-animation/
