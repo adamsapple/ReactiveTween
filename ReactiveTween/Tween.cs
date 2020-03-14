@@ -6,7 +6,7 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading;
 using EasingFunction = System.Func<double, float>;
-using Debug = XFLib.Diagnostics.Debug;
+using Debug = XamLib.Diagnostics.Debug;
 
 namespace ReactiveTween
 {
@@ -291,7 +291,7 @@ namespace ReactiveTween
             }
 
             observers.Add(observer);
-            var result = new RemoveObserverDisposable<T>(this, observer);
+            var result = new RemoveObserverDisposable(this, observer);
 
             return result;
         }
@@ -322,7 +322,7 @@ namespace ReactiveTween
         /// Disposeが呼ばれたらobserverを監視対象から削除する 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        private class RemoveObserverDisposable<T> : IDisposable
+        private class RemoveObserverDisposable : IDisposable
         {
             TweenImpl<T> parent;
             private IObserver<T> observer;
