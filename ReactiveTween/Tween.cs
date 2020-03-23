@@ -29,6 +29,11 @@ namespace ReactiveTween
 
         #endregion Members.
 
+        private Tween()
+        {
+
+        }
+
         /// <summary>
         /// Tweenerの生成
         /// </summary>
@@ -60,7 +65,7 @@ namespace ReactiveTween
         /// <param name="delayBefore">イージング開始までの待機時間(sec)</param>
         /// <param name="delayAfter">イージング終了後の待機時間(sec)</param>
         /// <returns></returns>
-        public IObservable<T> Create<T>(T begin, T end, float duration, EasingFunction ef, Func<T, T, float, T> f2t, int repeat = 1, float delayBefore = 0, float delayAfter = 0)
+        public static IObservable<T> Create<T>(T begin, T end, float duration, EasingFunction ef, Func<T, T, float, T> f2t, int repeat = 1, float delayBefore = 0, float delayAfter = 0)
         {
             ef = ef ?? (n => Easing.EaseInOut(n, EasingType.Cubic));
 
@@ -116,6 +121,7 @@ namespace ReactiveTween
         /// 自分を監視してる人を管理するリスト
         /// </summary>
         private List<IObserver<T>> observers = new List<IObserver<T>>();
+        private object lockObj = new object();
 
         /// <summary>
         /// 同期用object
@@ -263,7 +269,14 @@ namespace ReactiveTween
         /// <param name="t"></param>
         private void OnNext(T t)
         {
-            observers.ForEach(obs => obs.OnNext(t));
+            //lock (lockObj)
+            //{
+            //    observers.ForEach(obs => obs.OnNext(t));
+            //}
+            for (var i = observers.Count; --i >= 0;)
+            {
+                observers[i].OnNext(t);
+            }
         }
 
         /// <summary>
@@ -290,7 +303,11 @@ namespace ReactiveTween
                 Execute();
             }
 
-            observers.Add(observer);
+            lock (lockObj)
+            {
+                observers.Add(observer);
+            }
+
             var result = new RemoveObserverDisposable(this, observer);
 
             return result;
@@ -306,9 +323,13 @@ namespace ReactiveTween
                 return;
             }
 
+
             if (observers.IndexOf(observer) != -1)
             {
-                observers.Remove(observer);
+                lock (lockObj)
+                {
+                    observers.Remove(observer);
+                }
             }
             if (!observers.Any())
 
